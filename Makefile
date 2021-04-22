@@ -20,7 +20,7 @@ test_cities: test_cities.o cities.o
 	$(CXX) $(CXXFLAGS) $(OPTFLAGS) -c -o $@ $<
 
 clean:
-	rm -rf *.o tsp test_cities
+	rm -rf *.o *.gch *.dSYM tsp test_cities
 
 clean_o: # "make clean_o" removes only the .o files, leaving compiled apps
 	rm -rf *.o

@@ -39,9 +39,10 @@ class Cities {
 
   //OPERATOR OVERLOADS:
   friend std::istream& operator>> (std::istream& iS, Cities& c);
+  friend std::ostream& operator<< (std::ostream& oS, Cities& c);
 
   //DATA:
   // A vector containing the coord_t's of each city in the object.
-  cityCollection_t my_Cities;
+  cityCollection_t myCities;
 
 };

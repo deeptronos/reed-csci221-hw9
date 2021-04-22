@@ -56,7 +56,7 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 			cityCollection.push_back(newCity); // Add newCity to cityCollection
 		}
 		// Now, we've read everything on the stream that we can into int pairs within cityCollection
-		c.my_Cities = cityCollection;
+		c.myCities = cityCollection;
 		return iS;
 
 	}else{ // If we failed to read from the stream...
@@ -66,3 +66,19 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 	}
 
 }
+
+//When implemented, we should be able to run code like:
+	// std::cout << cities
+std::ostream& operator<< (std::ostream& oS, Cities& c){
+	std::cout <<"hello???" << std::endl;
+	if(!oS){ // Check if iS is a valid istream // SIDENOTE: i'm not sure if we can check a stream this way
+		throw std::invalid_argument("istream is nullptr.");
+	}
+	for(Cities::coord_t city : c.myCities){ // For each city in myCities...
+		oS << city.first << ' ' << city.second << '\n'; // Encode the coordinates of a city as "<posX> <posY>\n"
+	}
+
+	return oS;
+}
+
+

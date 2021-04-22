@@ -14,9 +14,11 @@ int main(int argc, char* argv[]){
 	if (!in_file) {throw std::logic_error{"Failed to open file."}; }
 
 	Cities citiesObject; // Initialize a Cities
-
+	std::cout << "test1" << std::endl;
 	in_file >> citiesObject; // Read contents of in_file into citiesObject
 
+	in_file.close();
 
+	std::cout << citiesObject; // Read contents of citiesObject to terminal
 	return 0;
 }
