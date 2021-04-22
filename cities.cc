@@ -16,58 +16,40 @@ std::istream& operator>>(std::istream& iS, Cities& c){ // Read: a .tsv file, con
 
 	Cities::cityCollection_t cityCollection;
 	char in;
-	iS.get(in); // Read the first char from the stream
 
-	while(in != eof()) {
+	if(iS>>in) { //Attempt to read from the stream into in
+		while (in != eof()) {
+			int pair[2] = {-1, -1};
 
-		int pair[2] = -1, -1;
+			for (int i = 0; i <= 1; ++i) { // This loop will run twice
+				if (in == eof()) { break; } // If we encounter an EOF, break
 
-		for (int i = 0; i <= 1; i++) {
-			if(in == eof()){break;} // If we encounter an EOF, break
+				std::string numStr; //string to store chars within until we convert them to an integer
 
-			std::string numStr;
+				while (true) { //Loop until break
+					if (in == ' ' || in == eof() ||
+					    in == '\n') { break } // If we encounter a space, an EOF, or a newline, break
 
-			while (true) { //Loop until break
-				if (in == ' ' || in == of() ||
-				    in == '\n') { break } // If we encounter a space, an EOF, or a newline, break
+					numStr += in; // add in to numStr
+					iS.get(in); // Get next char
+				}
+				int num = std::stoi(numStr); // Convert numStr to an int
+				pair[i] = num; // Set the i-th entry in pair to our num
 
-				numStr += in; // add in to numStr
-				iS.get(in); // Get next char
-			}
-			int num = std::stoi(numStr); // Convert numStr to an int
-			pair[i] = num; // Set the i-th entry in pair to our num
-		} // now, pair contains the integers for a coord_t!
-		if(pair[0] == -1 || pair[1] == -1){break;} // if pair is unchanged from its initialization, break
+			} // now, pair contains the integers for a coord_t!
 
-		Cities::coord_t newCity(pair[0], pair[1]); // make a new coord_t based upon pair
-		cityCollection.push_back(newCity); // Add newCity to cityCollection
-	}
+			if (pair[0] == -1 || pair[1] == -1) { break; } // if pair is unchanged from its initialization, break
 
-//	while(true){ //Loop will run until we break from it
-//		if(in == eof()) { break; }// If we've just read in an EOF character, break!
-//		else{
-//			int num;
-//			std::string numStr;
-//
-//			while( in != ' ' && in != '\n'){ // Get char from stream and store it in char in, until we reach a space char (' ') or a newline
-//				numStr += in; // add char in to numStr
-//				iS.get(in); // Read a char from the stream
-//			}
-//			if(in == ' '){ // If we've read in a space character...
-//				while(in == ' '){ // Read from the stream until we read a non-space character
-//					iS.get(in);
-//				}
-//			}else if(in == '\n') { // If we've read in a newline...
-//
-//			}
-//		}
-//
-//	}
+			Cities::coord_t newCity(pair[0], pair[1]); // make a new coord_t based upon pair
+			cityCollection.push_back(newCity); // Add newCity to cityCollection
+		}
+		// Now, we've read everything on the stream that we can into int pairs within cityCollection
+		c.my_Cities = cityCollection;
+		return iS;
 
-
-
-
-	if(iS>>i){ // Did we succeed at reading an int into i?
+	}else{ // If we failed to read from the stream...
+		iS.setstate(ios_base::failbit); // Register failure
+		return iS;
 
 	}
 
