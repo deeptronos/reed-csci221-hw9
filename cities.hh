@@ -6,6 +6,9 @@
 
 #include <vector>
 
+#include <istream>
+#include <ostream>
+#include <iostream>
 
 // Representation of an ordering of cities
 class Cities {
@@ -33,6 +36,9 @@ class Cities {
   // The distance between any two cities is computed as the Euclidean
   // distance on a plane between their coordinates.
   double total_path_distance(const permutation_t& ordering) const;
+
+  //OPERATOR OVERLOADS:
+  friend std::istream& operator>> (std::istream& iS, Cities& c);
 
   //DATA:
   // A vector containing the coord_t's of each city in the object.
