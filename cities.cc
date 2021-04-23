@@ -65,7 +65,7 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 
 			} // now, pair contains the integers for a coord_t!
 
-			if (pair[0] == -1 || pair[1] == -1 || iS.eof()) { break; } // if pair is unchanged from its initialization, or we reach EOF, break
+			if (pair[0] == -1 || pair[1] == -1) { break; } // if pair is unchanged from its initialization, or perhaps if num failed to read numbers from the stream, break
 
 			Cities::coord_t newCity(pair[0], pair[1]); // make a new coord_t based upon pair
 			cityCollection.push_back(newCity); // Add newCity to cityCollection
@@ -113,7 +113,7 @@ double Cities::total_path_distance(const Cities::permutation_t &ordering) const 
 		}
 	}
 	return totalDist;
-	// NOTE: if any element of the ordering permutation specifies a city that doesn't exist within Cities, getting the city at the index specified by that element from myCities will return coordinates 0, 0
+	// NOTE: if any element of the ordering permutation specifies a city that doesn't exist within Cities, getting the city at the index specified by that element from myCities will either return coordinates (0, 0), or coordinates of random numbers
 }
 
 Cities Cities::reorder(const Cities::permutation_t &ordering) const {
