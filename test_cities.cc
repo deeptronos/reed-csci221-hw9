@@ -2,6 +2,23 @@
 #include "cities.hh"
 #include <iostream>
 
+int test_reorder(Cities& citiesObj){
+
+	std::cout << "Initial order:\n" << citiesObj << std::endl;
+	Cities reorder = citiesObj.reorder({ 3, 2, 4, 0, 1 });
+	std::cout << "Re-ordered:\n" << reorder << std::endl;
+
+	return 0;
+}
+
+int test_total_path_distance(Cities& citiesObj){
+	//Cities::permutation_t perm = {1, 2, 3};
+	Cities::permutation_t perm = {9, 2, 7};
+	double d = citiesObj.total_path_distance(perm);
+	std::cout << "total_path_distance: " << d << std::endl;
+	return 0;
+}
+
 int test_inOperator(std::ifstream& inStream, Cities& destinationCities){ // Tests taking input to a Cities
 	inStream >> destinationCities;
 	return 0;
@@ -12,12 +29,7 @@ int test_outOperator(Cities& citiesObj){ // Tests output of a Cities
 	return 0;
 }
 
-int test_total_path_distance(Cities& citiesObj){
-	Cities::permutation_t perm = {1, 2, 3};
-	double d = citiesObj.total_path_distance(perm);
-	std::cout << "total_path_distance: " << d << std::endl;
-	return 0;
-}
+
 
 // main() that will accept command line input
 int main(int argc, char* argv[]){
@@ -37,7 +49,10 @@ int main(int argc, char* argv[]){
 	in_file.close();
 
 	test_outOperator(citiesObject);
+
 	test_total_path_distance(citiesObject);
+
+	test_reorder(citiesObject);
 
 	return 0;
 }

@@ -105,14 +105,23 @@ double Cities::total_path_distance(const Cities::permutation_t &ordering) const 
 	double totalDist = 0;
 
 	for(Cities::permutation_t::size_type i = 0; i < ordering.size(); ++i){
+
 		if(i !=( ordering.size() - 1)){ // If there is an element in ordering after the i-th element...
-			totalDist += coordEuclideanDistance2D(Cities::myCities[ordering[i]],Cities::myCities[ordering[i + 1]] );;
+			totalDist += coordEuclideanDistance2D(Cities::myCities[ordering[i]],Cities::myCities[ordering[i + 1]] ); // Get distance from ordering[i]-th element to the next element specified by ordering[]
 		}else{
-			totalDist += coordEuclideanDistance2D(Cities::myCities[ordering[i]], Cities::myCities[ordering.front()]); //Get distance from last element specified by ordering[i] to the first element specified by ordering, so that the salesperson completes their trip!;
+			totalDist += coordEuclideanDistance2D(Cities::myCities[ordering[i]], Cities::myCities[ordering.front()]); //Get distance from last element specified by ordering[i] to the first element specified by ordering, so that the salesperson completes their trip!
 		}
 	}
 	return totalDist;
+	// NOTE: if any element of the ordering permutation specifies a city that doesn't exist within Cities, getting the city at the index specified by that element from myCities will return coordinates 0, 0
+}
 
+Cities Cities::reorder(const Cities::permutation_t &ordering) const {
+	Cities reorderedCity;
+	for(unsigned int pos:ordering){
+		reorderedCity.myCities.push_back(Cities::myCities[pos]);
+	}
+	return reorderedCity;
 }
 
 
