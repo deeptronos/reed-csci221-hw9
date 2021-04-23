@@ -3,8 +3,16 @@
 
 
 #include <string> // std::stoi
+#include <cmath> // std::sqrt, std::abs
 
-int getIntFromStream(std::istream& iS, char& streamChar){
+
+double coordEuclideanDistance2D(Cities::coord_t p1, Cities::coord_t p2){ // Helper function for calculating 2D Euclidean distance given two coord_t's.
+	auto within = (double) (std::pow((p2.first - p1.first), 2) + std::pow((p2.second - p1.second), 2)); // cast the contents of the root to doubles, so that we return the type specified by the declaration of total_path_distance
+	auto calc = std::sqrt(within);
+	return calc;
+}
+
+int getIntFromStream(std::istream& iS, char& streamChar){ //Helper function to condense the code contained in operator>>, and for helping me with readability :)
 
 	std::string numStr; //string to store chars within until we convert them to an integer
 
@@ -46,7 +54,8 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 				int num = getIntFromStream(iS, in);
 
 				while(in == ' '|| in=='\n'){ //While in is a space char, get chars from stream, so that we skip past any whitespace
-					if(iS.eof()){ // This while() get stuck in an infinite loop unless I check for an EOF
+					if(iS.eof()){ // This while() get stuck in an infinite loop unless I check for an EOF !----- COME BACK TO THIS AND FIGURE OUT WHY -------!
+			//BEEP BEEP!!! THIS IS UR SECOND REMINDER!
 						break;
 					}
 					iS.get(in);
@@ -91,8 +100,19 @@ std::ostream& operator<< (std::ostream& oS, Cities& c){
 
 // total_path_distance() should compute the total distance of traversing all the cities in the order defined by the permutation.
 // Don't forget to add the distance going back from the last city in the permutation to the first one.
-//double Cities::total_path_distance(const Cities::permutation_t &ordering) const {
-//	return 0;
-//}
-//
+double Cities::total_path_distance(const Cities::permutation_t &ordering) const {
+
+	double totalDist = 0;
+
+	for(Cities::permutation_t::size_type i = 0; i < ordering.size(); ++i){
+		if(i !=( ordering.size() - 1)){ // If there is an element in ordering after the i-th element...
+			totalDist += coordEuclideanDistance2D(Cities::myCities[ordering[i]],Cities::myCities[ordering[i + 1]] );;
+		}else{
+			totalDist += coordEuclideanDistance2D(Cities::myCities[ordering[i]], Cities::myCities[ordering.front()]); //Get distance from last element specified by ordering[i] to the first element specified by ordering, so that the salesperson completes their trip!;
+		}
+	}
+	return totalDist;
+
+}
+
 

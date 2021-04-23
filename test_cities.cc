@@ -1,10 +1,23 @@
 #include <fstream>
 #include "cities.hh"
 #include <iostream>
-//
-//int test_output(){
-//
-//}
+
+int test_inOperator(std::ifstream& inStream, Cities& destinationCities){ // Tests taking input to a Cities
+	inStream >> destinationCities;
+	return 0;
+}
+
+int test_outOperator(Cities& citiesObj){ // Tests output of a Cities
+	std::cout << citiesObj;
+	return 0;
+}
+
+int test_total_path_distance(Cities& citiesObj){
+	Cities::permutation_t perm = {1, 2, 3};
+	double d = citiesObj.total_path_distance(perm);
+	std::cout << "total_path_distance: " << d << std::endl;
+	return 0;
+}
 
 // main() that will accept command line input
 int main(int argc, char* argv[]){
@@ -20,12 +33,12 @@ int main(int argc, char* argv[]){
 	Cities citiesObject; // Initialize a Cities
 
 
-
-	in_file >> citiesObject; // Read contents of in_file into citiesObject
-
+	test_inOperator(in_file, citiesObject);
 	in_file.close();
 
-	std::cout << citiesObject; // Read contents of citiesObject to terminal
+	test_outOperator(citiesObject);
+	test_total_path_distance(citiesObject);
+
 	return 0;
 }
 
