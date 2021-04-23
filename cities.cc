@@ -5,6 +5,8 @@
 #include <string> // std::stoi
 #include <cmath> // std::sqrt, std::abs
 #include <algorithm> //std::max_element
+#include <chrono>
+#include <random>
 
 double coordEuclideanDistance2D(Cities::coord_t p1, Cities::coord_t p2){ // Helper function for calculating 2D Euclidean distance given two coord_t's.
 	auto within = (double) (std::pow((p2.first - p1.first), 2) + std::pow((p2.second - p1.second), 2)); // cast the contents of the root to doubles, so that we return the type specified by the declaration of total_path_distance
@@ -123,6 +125,22 @@ Cities Cities::reorder(const Cities::permutation_t &ordering) const {
 		reorderedCity.myCities.push_back(Cities::myCities[pos]); //Add the city designated by that element to reorderedCity.
 	}
 	return reorderedCity;
+}
+
+Cities::permutation_t Cities::random_permutation(unsigned int len) {
+	Cities::permutation_t newPermutation(len); // Initialize a new permutation_t of size len.
+	for(unsigned i = 0; i < len; i++){ // Fill the permutation with ints from 0 to len-1.
+		newPermutation[i] = i;
+	}
+	// Generate a time-based seed.
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	// Define random generation engine
+	std::default_random_engine engine(seed);
+
+	// shuffle() permutation elements.
+	std::shuffle(newPermutation.begin(), newPermutation.end(), engine);
+
+	return newPermutation;
 }
 
 

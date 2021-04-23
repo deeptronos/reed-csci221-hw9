@@ -37,6 +37,10 @@ class Cities {
   // distance on a plane between their coordinates.
   double total_path_distance(const permutation_t& ordering) const;
 
+  //Generates and returns a new permutation of all the numbers from 0 to len-1, with no numbers skipped nor repeated.
+    // This is a method of Cities so that it's implementation is accessible from any Cities object
+  permutation_t random_permutation(unsigned len);
+
   //OPERATOR OVERLOADS:
   friend std::istream& operator>> (std::istream& iS, Cities& c);
   friend std::ostream& operator<< (std::ostream& oS, Cities& c);
