@@ -34,15 +34,21 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 	char in;
 
 	if(iS>>in) { //Attempt to read from the stream into in
-		while (in != iS.eof()) {
+
+
+		while (!iS.eof()) { // While we haven't reached the end of file...
+
 			int pair[2] = {-1, -1};
 
 			for (int i = 0; i <= 1; ++i) { // This loop will run twice
-				if (in == iS.eof()) { break; } // If we encounter an EOF, break
+				if (iS.eof()) { printf("EOF on line 53"); break; } // If we encounter an EOF, break
 
 				int num = getIntFromStream(iS, in);
 
 				while(in == ' '|| in=='\n'){ //While in is a space char, get chars from stream, so that we skip past any whitespace
+					if(iS.eof()){ // This while() get stuck in an infinite loop unless I check for an EOF
+						break;
+					}
 					iS.get(in);
 				}
 
@@ -50,11 +56,13 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 
 			} // now, pair contains the integers for a coord_t!
 
-			if (pair[0] == -1 || pair[1] == -1) { break; } // if pair is unchanged from its initialization, break
+			if (pair[0] == -1 || pair[1] == -1 || iS.eof()) { break; } // if pair is unchanged from its initialization, or we reach EOF, break
 
 			Cities::coord_t newCity(pair[0], pair[1]); // make a new coord_t based upon pair
 			cityCollection.push_back(newCity); // Add newCity to cityCollection
+
 		}
+
 		// Now, we've read everything on the stream that we can into int pairs within cityCollection
 		c.myCities = cityCollection;
 		return iS;
@@ -70,7 +78,7 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 //When implemented, we should be able to run code like:
 	// std::cout << cities
 std::ostream& operator<< (std::ostream& oS, Cities& c){
-	std::cout <<"hello???" << std::endl;
+
 	if(!oS){ // Check if iS is a valid istream // SIDENOTE: i'm not sure if we can check a stream this way
 		throw std::invalid_argument("istream is nullptr.");
 	}
@@ -81,4 +89,10 @@ std::ostream& operator<< (std::ostream& oS, Cities& c){
 	return oS;
 }
 
+// total_path_distance() should compute the total distance of traversing all the cities in the order defined by the permutation.
+// Don't forget to add the distance going back from the last city in the permutation to the first one.
+//double Cities::total_path_distance(const Cities::permutation_t &ordering) const {
+//	return 0;
+//}
+//
 

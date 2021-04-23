@@ -1,6 +1,10 @@
 #include <fstream>
 #include "cities.hh"
 #include <iostream>
+//
+//int test_output(){
+//
+//}
 
 // main() that will accept command line input
 int main(int argc, char* argv[]){
@@ -14,7 +18,9 @@ int main(int argc, char* argv[]){
 	if (!in_file) {throw std::logic_error{"Failed to open file."}; }
 
 	Cities citiesObject; // Initialize a Cities
-	std::cout << "test1" << std::endl;
+
+
+
 	in_file >> citiesObject; // Read contents of in_file into citiesObject
 
 	in_file.close();
@@ -22,3 +28,4 @@ int main(int argc, char* argv[]){
 	std::cout << citiesObject; // Read contents of citiesObject to terminal
 	return 0;
 }
+

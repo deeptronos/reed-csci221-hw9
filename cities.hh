@@ -45,4 +45,5 @@ class Cities {
   // A vector containing the coord_t's of each city in the object.
   cityCollection_t myCities;
 
+
 };
