@@ -4,7 +4,7 @@
 
 #include <string> // std::stoi
 #include <cmath> // std::sqrt, std::abs
-
+#include <algorithm> //std::max_element
 
 double coordEuclideanDistance2D(Cities::coord_t p1, Cities::coord_t p2){ // Helper function for calculating 2D Euclidean distance given two coord_t's.
 	auto within = (double) (std::pow((p2.first - p1.first), 2) + std::pow((p2.second - p1.second), 2)); // cast the contents of the root to doubles, so that we return the type specified by the declaration of total_path_distance
@@ -41,7 +41,7 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 	Cities::cityCollection_t cityCollection;
 	char in;
 
-	if(iS>>in) { //Attempt to read from the stream into in
+	if(iS>>in) { //Attempt to read from the stream into in.
 
 
 		while (!iS.eof()) { // While we haven't reached the end of file...
@@ -49,7 +49,7 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 			int pair[2] = {-1, -1};
 
 			for (int i = 0; i <= 1; ++i) { // This loop will run twice
-				if (iS.eof()) { printf("EOF on line 53"); break; } // If we encounter an EOF, break
+				if (iS.eof()) { break; } // If we encounter an EOF, break.
 
 				int num = getIntFromStream(iS, in);
 
@@ -61,23 +61,23 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 					iS.get(in);
 				}
 
-				pair[i] = num; // Set the i-th entry in pair to our num
+				pair[i] = num; // Set the i-th entry in pair to our num.
 
 			} // now, pair contains the integers for a coord_t!
 
 			if (pair[0] == -1 || pair[1] == -1) { break; } // if pair is unchanged from its initialization, or perhaps if num failed to read numbers from the stream, break
 
-			Cities::coord_t newCity(pair[0], pair[1]); // make a new coord_t based upon pair
-			cityCollection.push_back(newCity); // Add newCity to cityCollection
+			Cities::coord_t newCity(pair[0], pair[1]); // make a new coord_t based upon pair.
+			cityCollection.push_back(newCity); // Add newCity to cityCollection.
 
 		}
 
-		// Now, we've read everything on the stream that we can into int pairs within cityCollection
+		// Now, we've read everything on the stream that we can into int pairs within cityCollection.
 		c.myCities = cityCollection;
 		return iS;
 
 	}else{ // If we failed to read from the stream...
-		iS.setstate(std::ios_base::failbit); // Register failure
+		iS.setstate(std::ios_base::failbit); // Register failure.
 		return iS;
 
 	}
@@ -88,7 +88,7 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 	// std::cout << cities
 std::ostream& operator<< (std::ostream& oS, Cities& c){
 
-	if(!oS){ // Check if iS is a valid istream // SIDENOTE: i'm not sure if we can check a stream this way
+	if(!oS){ // Check if iS is a valid istream. // SIDENOTE: i'm not sure if we can check a stream this way
 		throw std::invalid_argument("istream is nullptr.");
 	}
 	for(Cities::coord_t city : c.myCities){ // For each city in myCities...
@@ -102,24 +102,25 @@ std::ostream& operator<< (std::ostream& oS, Cities& c){
 // Don't forget to add the distance going back from the last city in the permutation to the first one.
 double Cities::total_path_distance(const Cities::permutation_t &ordering) const {
 
+	if(*std::max_element(ordering.begin(), ordering.end()) > (myCities.size() - 1)){throw std::logic_error("Permutation includes elements that don't exist within Cities object");} // Make sure that total_path_distance is called with a valid ordering.
+
 	double totalDist = 0;
 
 	for(Cities::permutation_t::size_type i = 0; i < ordering.size(); ++i){
-
 		if(i !=( ordering.size() - 1)){ // If there is an element in ordering after the i-th element...
-			totalDist += coordEuclideanDistance2D(Cities::myCities[ordering[i]],Cities::myCities[ordering[i + 1]] ); // Get distance from ordering[i]-th element to the next element specified by ordering[]
+			totalDist += coordEuclideanDistance2D(Cities::myCities[ordering[i]],Cities::myCities[ordering[i + 1]] ); // Get distance from ordering[i]-th element to the next element specified by ordering[].
 		}else{
 			totalDist += coordEuclideanDistance2D(Cities::myCities[ordering[i]], Cities::myCities[ordering.front()]); //Get distance from last element specified by ordering[i] to the first element specified by ordering, so that the salesperson completes their trip!
 		}
 	}
 	return totalDist;
-	// NOTE: if any element of the ordering permutation specifies a city that doesn't exist within Cities, getting the city at the index specified by that element from myCities will either return coordinates (0, 0), or coordinates of random numbers
+	// NOTE: if any element of the ordering permutation specifies a city that doesn't exist within Cities, getting the city at the index specified by that element from myCities will either return coordinates (0, 0), or coordinates of random numbers.
 }
 
 Cities Cities::reorder(const Cities::permutation_t &ordering) const {
 	Cities reorderedCity;
-	for(unsigned int pos:ordering){
-		reorderedCity.myCities.push_back(Cities::myCities[pos]);
+	for(unsigned int pos:ordering){ //For each element in ordering...
+		reorderedCity.myCities.push_back(Cities::myCities[pos]); //Add the city designated by that element to reorderedCity.
 	}
 	return reorderedCity;
 }

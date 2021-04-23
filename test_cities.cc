@@ -13,7 +13,7 @@ int test_reorder(Cities& citiesObj){
 
 int test_total_path_distance(Cities& citiesObj){
 	//Cities::permutation_t perm = {1, 2, 3};
-	Cities::permutation_t perm = {9, 2, 7};
+	Cities::permutation_t perm = {0, 1, 2, 3, 4};
 	double d = citiesObj.total_path_distance(perm);
 	std::cout << "total_path_distance: " << d << std::endl;
 	return 0;
