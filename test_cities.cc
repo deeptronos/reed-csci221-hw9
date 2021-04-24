@@ -2,6 +2,10 @@
 #include "cities.hh"
 #include <iostream>
 
+void test_random_permutation(Cities& citiesObj){
+	citiesObj.random_permutation(5);
+}
+
 void test_reorder(Cities& citiesObj){
 	std::cout << "Initial order:\n" << citiesObj << std::endl;
 	Cities reorder = citiesObj.reorder({ 3, 2, 4, 0, 1 });
@@ -23,20 +27,18 @@ void test_outOperator(Cities& citiesObj){ // Tests output of a Cities
 	std::cout << citiesObj;
 }
 
-void test_random_permutation(Cities& citiesObj){
-	citiesObj.random_permutation(5);
-}
 
 // main() that will accept command line input
 int main(int argc, char* argv[]){
 	// Ensure filename was given
 	if(argc != 2) { throw std::logic_error("Invalid number of arguments. Correct usage: ./<application> <filename>"); }
 
-	std::ifstream in_file;
+	// Set up files:
+	std::ifstream in_file; //New in-file-stream
 	std::string in_filename = argv[1];
-
 	in_file.open(argv[1]); // Open filestream
 	if (!in_file) {throw std::logic_error{"Failed to open file."}; }
+
 
 	Cities citiesObject; // Initialize a Cities
 
