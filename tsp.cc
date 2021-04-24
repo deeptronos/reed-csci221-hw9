@@ -20,10 +20,6 @@ Cities::permutation_t generateDefaultPermutation(unsigned size){ // Helper funct
 	return perm;
 }
 
-void printShortestPermutationUpdate(unsigned& i, double& distance){ // Helper function to print required information when a shortest permutation is found
-	std::cout << i << ' ' << distance << std::endl;
-}
-
 // main() that will accept command line input
 int main(int argc, char* argv[]){
 	//Parameters
@@ -49,16 +45,16 @@ int main(int argc, char* argv[]){
 
 	for(unsigned i = 0; i < iterations; ++i){
 		Cities::permutation_t newPermutation = citiesObject.random_permutation(citiesObject.size()); // Generate a random permutation of cityObject's size().
-		double permutationPathDistance = citiesObject.total_path_distance(newPermutation); // Test the distance of traveling this permutation
+		double permutationPathDistance       = citiesObject.total_path_distance(newPermutation); // Test the distance of traveling this permutation
 
 		if(permutationPathDistance < shortestDistance){ // If this permutation requires less distance than the current shortest...
 			shortestDistance = permutationPathDistance; // This is the new shortest distance!
+			citiesObject     = citiesObject.reorder(newPermutation); //Replace citiesObject with itself, reordered according to the new best permutation.
 
-			citiesObject = citiesObject.reorder(newPermutation); //Replace citiesObject with itself, reordered according to the new best permutation.
-			printShortestPermutationUpdate(i, shortestDistance); // NOTE: is it really necessary/helpful to condense a single line of printing code to its own function?
+			std::cout << i << ' ' << shortestDistance << std::endl; // Output result
 		}
 	}
 
-	outputFile << citiesObject; // Write citiesObject to shortest.tsv
+	outputFile << citiesObject; // Output citiesObject to shortest.tsv
 	return 0;
 }
