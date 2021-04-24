@@ -110,9 +110,9 @@ double Cities::total_path_distance(const Cities::permutation_t &ordering) const 
 
 	for(Cities::permutation_t::size_type i = 0; i < ordering.size(); ++i){
 		if(i !=( ordering.size() - 1)){ // If there is an element in ordering after the i-th element...
-			totalDist += coordEuclideanDistance2D(Cities::myCities[ordering[i]],Cities::myCities[ordering[i + 1]] ); // Get distance from ordering[i]-th element to the next element specified by ordering[].
+			totalDist += coordEuclideanDistance2D(myCities[ordering[i]],myCities[ordering[i + 1]] ); // Get distance from ordering[i]-th element to the next element specified by ordering[].
 		}else{
-			totalDist += coordEuclideanDistance2D(Cities::myCities[ordering[i]], Cities::myCities[ordering.front()]); //Get distance from last element specified by ordering[i] to the first element specified by ordering, so that the salesperson completes their trip!
+			totalDist += coordEuclideanDistance2D(myCities[ordering[i]], myCities[ordering.front()]); //Get distance from last element specified by ordering[i] to the first element specified by ordering, so that the salesperson completes their trip!
 		}
 	}
 	return totalDist;
@@ -122,7 +122,7 @@ double Cities::total_path_distance(const Cities::permutation_t &ordering) const 
 Cities Cities::reorder(const Cities::permutation_t &ordering) const {
 	Cities reorderedCity;
 	for(unsigned int pos:ordering){ //For each element in ordering...
-		reorderedCity.myCities.push_back(Cities::myCities[pos]); //Add the city designated by that element to reorderedCity.
+		reorderedCity.myCities.push_back(myCities[pos]); //Add the city designated by that element to reorderedCity.
 	}
 	return reorderedCity;
 }
