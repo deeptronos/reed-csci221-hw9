@@ -56,8 +56,7 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 				int num = getIntFromStream(iS, in);
 
 				while(in == ' '|| in=='\n'){ //While in is a space char, get chars from stream, so that we skip past any whitespace
-					if(iS.eof()){ // This while() get stuck in an infinite loop unless I check for an EOF !----- COME BACK TO THIS AND FIGURE OUT WHY -------!
-			//BEEP BEEP!!! THIS IS UR SECOND REMINDER!
+					if(iS.eof()){
 						break;
 					}
 					iS.get(in);
@@ -136,8 +135,8 @@ Cities::permutation_t Cities::random_permutation(unsigned int len) {
 
 	// Generate a time-based seed.
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-	// Define random generation engine
-	std::knuth_b engine(seed); // I've gotten my shortest distance yet with knuth_b, so, after testing most (if not each) of the random generators (as listed on cplusplus.com), that's why I chose it.
+	// Define random generation engine.
+	std::knuth_b engine(seed); // I've gotten my shortest distance yet with knuth_b, so, after testing most (if not each) of the random generators (as listed on cplusplus.com), I chose it.
 
 	// shuffle() permutation elements.
 	std::shuffle(newPermutation.begin(), newPermutation.end(), engine);
