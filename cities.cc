@@ -37,7 +37,7 @@ int getIntFromStream(std::istream& iS, char& streamChar){ //Helper function to c
 	// std::cin >> cities;
 std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, containing rows formatted as "int int", to populate a vector of pairs (i.e., a cityCollection_t)
 	if(!iS){ // Check if iS is a valid istream // SIDENOTE: i'm not sure if we can check a stream this way
-		throw std::invalid_argument("istream is nullptr.");
+		throw std::invalid_argument("Invalid istream.");
 	}
 
 	Cities::cityCollection_t cityCollection;
@@ -88,10 +88,10 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 
 //When implemented, we should be able to run code like:
 	// std::cout << cities
-std::ostream& operator<< (std::ostream& oS, Cities& c){
+std::ostream& operator<< (std::ostream& oS, Cities& c){ //Cities out operator (operator<<)
 
-	if(!oS){ // Check if iS is a valid istream. // SIDENOTE: i'm not sure if we can check a stream this way
-		throw std::invalid_argument("istream is nullptr.");
+	if(!oS){ // Check if oS is a valid stream. // SIDENOTE: i'm not sure if we can check a stream this way
+		throw std::invalid_argument("Invalid ostream.");
 	}
 	for(Cities::coord_t city : c.myCities){ // For each city in myCities...
 		oS << city.first << ' ' << city.second << '\n'; // Encode the coordinates of a city as "<posX> <posY>\n"
