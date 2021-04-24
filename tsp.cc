@@ -29,12 +29,12 @@ int main(int argc, char* argv[]){
 	if(argc != 2) { throw std::logic_error("Invalid number of arguments. Correct usage: ./<application> <filename>"); } // If it wasn't, throw an error.
 
 	// Set up file I/O:
-	std::ifstream in_file; // Open new in-filestream
+	std::ifstream in_file; // Open new in-filestream.
 	std::string in_filename = argv[1];
 	in_file.open(argv[1]); // Open filestream
-	if (!in_file) {throw std::logic_error{"Failed to open file."}; }
+	if (!in_file) {throw std::logic_error{"Failed to open file."}; } // Throw an error if in_file not found
 
-	std::ofstream outputFile("shortest.tsv", std::ofstream::out | std::ofstream::trunc); // Open a new out-filestream
+	std::ofstream outputFile("shortest.tsv", std::ofstream::out | std::ofstream::trunc); // Open a new out-filestream.
 
 
 	Cities citiesObject = Cities(); // Initialize a Cities
