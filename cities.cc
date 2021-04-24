@@ -129,13 +129,15 @@ Cities Cities::reorder(const Cities::permutation_t &ordering) const {
 
 Cities::permutation_t Cities::random_permutation(unsigned int len) {
 	Cities::permutation_t newPermutation(len); // Initialize a new permutation_t of size len.
+
 	for(unsigned i = 0; i < len; i++){ // Fill the permutation with ints from 0 to len-1.
 		newPermutation[i] = i;
 	}
+
 	// Generate a time-based seed.
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 	// Define random generation engine
-	std::default_random_engine engine(seed);
+	std::knuth_b engine(seed); // I've gotten my shortest distance yet with knuth_b, so, after testing most (if not each) of the random generators (as listed on cplusplus.com), that's why I chose it.
 
 	// shuffle() permutation elements.
 	std::shuffle(newPermutation.begin(), newPermutation.end(), engine);
