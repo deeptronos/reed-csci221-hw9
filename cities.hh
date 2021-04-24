@@ -49,6 +49,7 @@ class Cities {
   unsigned size(){return myCities.size();}
 
   // MAKE DATA NON PUBLIC
+ private:
   //DATA:
   // A vector containing the coord_t's of each city in the object.
   cityCollection_t myCities;
