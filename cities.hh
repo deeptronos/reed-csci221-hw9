@@ -45,6 +45,10 @@ class Cities {
   friend std::istream& operator>> (std::istream& iS, Cities& c);
   friend std::ostream& operator<< (std::ostream& oS, Cities& c);
 
+  //DATA EXPOSITION
+  unsigned size(){return myCities.size();}
+
+  // MAKE DATA NON PUBLIC
   //DATA:
   // A vector containing the coord_t's of each city in the object.
   cityCollection_t myCities;
