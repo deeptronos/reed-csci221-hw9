@@ -36,7 +36,6 @@ int main(int argc, char* argv[]){
 
 	std::ofstream outputFile("shortest.tsv", std::ofstream::out | std::ofstream::trunc); // Open a new out-filestream.
 
-
 	Cities citiesObject = Cities(); // Initialize a Cities
 
 	in_file >> citiesObject; // Read a cities file in to a Cities object

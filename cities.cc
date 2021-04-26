@@ -15,21 +15,21 @@ double coordEuclideanDistance2D(Cities::coord_t p1, Cities::coord_t p2){ // Help
 }
 
 int getIntFromStream(std::istream& iS, char& streamChar){ //Helper function to condense the code contained in operator>>, and for helping me with readability :)
-
-	std::string numStr; //string to store chars within until we convert them to an integer
+															// Also helps to manage my Quirky implementation of operator>> :P
+	std::string numStr; //string to store chars within until we convert them to an integer.
 
 	while (true) { //Loop until break
 		if (streamChar == ' ' || streamChar == iS.eof() ||
-		    streamChar == '\n') { break; } // If we encounter a space, an EOF, or a newline, break
+		    streamChar == '\n') { break; } // If we encounter a space, an EOF, or a newline, break.
 
-		numStr += streamChar; // add the character to numStr
-		iS.get(streamChar); // Get next char
+		numStr += streamChar; // add the character to numStr.
+		iS.get(streamChar); // Get next char.
 	}
-	if(!numStr.empty()){ //If numStr isn't empty, we've successfully read an integer into it
-		int num = std::stoi(numStr); // Convert numStr to an int
+	if(!numStr.empty()){ //If numStr isn't empty, we've successfully read an integer into it.
+		int num = std::stoi(numStr); // Convert numStr to an int.
 		return num;
 	}
-	return -1; //Otherwise, return -1
+	return -1; //Otherwise, return -1.
 }
 
 //allow for the reading  / filling of a Cities object from a stream. Choose whether this needs to be a method or a free function.
@@ -44,7 +44,6 @@ std::istream& operator>> (std::istream& iS, Cities& c){ // Read: a .tsv file, co
 	char in;
 
 	if(iS>>in) { //Attempt to read from the stream into in.
-
 
 		while (!iS.eof()) { // While we haven't reached the end of file...
 
@@ -115,7 +114,7 @@ double Cities::total_path_distance(const Cities::permutation_t &ordering) const 
 		}
 	}
 	return totalDist;
-	// NOTE: if any element of the ordering permutation specifies a city that doesn't exist within Cities, getting the city at the index specified by that element from myCities will either return coordinates (0, 0), or coordinates of random numbers.
+
 }
 
 Cities Cities::reorder(const Cities::permutation_t &ordering) const {
@@ -138,7 +137,7 @@ Cities::permutation_t Cities::random_permutation(unsigned int len) {
 	// Define random generation engine.
 	std::knuth_b engine(seed); // I've gotten my shortest distance yet with knuth_b, so, after testing most (if not each) of the random generators (as listed on cplusplus.com), I chose it.
 
-	// shuffle() permutation elements.
+	// shuffle() permutation elements using specified random engine.
 	std::shuffle(newPermutation.begin(), newPermutation.end(), engine);
 
 	return newPermutation;
